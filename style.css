@@ -128,3 +128,187 @@ footer a { color: var(--gold); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+
+/* Mobile horizontal overflow fix */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: clip;
+}
+
+img,
+video,
+iframe,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+.hero,
+main,
+section,
+.section-inner,
+.invitation-card,
+.venue-card,
+.event-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.hero-content {
+  width: 100%;
+  min-width: 0;
+}
+
+.hero h1 {
+  overflow-wrap: anywhere;
+}
+
+.hero-date,
+.hero-location,
+.invitation-card p,
+.venue-card p {
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 11vw, 65px);
+  }
+
+  .section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .countdown {
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .time-box {
+    min-width: 0;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .time-box strong {
+    font-size: clamp(23px, 7vw, 34px);
+  }
+
+  .time-box span {
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+  .event-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .event-main {
+    grid-column: auto;
+  }
+
+  .venue-actions,
+  .contact-row {
+    max-width: 100%;
+  }
+
+  .gold-btn,
+  .outline-btn {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Fix Wedding Festivities cards overflowing on mobile */
+.events,
+.events .section-inner {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  max-width: 100%;
+  gap: 16px;
+}
+
+.event-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.event-card h3,
+.event-card p,
+.event-time {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.event-time {
+  letter-spacing: 1px;
+  line-height: 1.7;
+}
+
+.event-main {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .events {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .event-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .event-main {
+    grid-column: auto;
+  }
+
+  .event-card {
+    padding: 24px 16px;
+  }
+
+  .event-card h3 {
+    font-size: 27px;
+  }
+
+  .event-time {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+}
+

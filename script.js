@@ -75,7 +75,7 @@ function createPetal() {
 
 setInterval(createPetal, 650);
 
-// Background music
+
 const music = document.getElementById("weddingMusic");
 const musicBtn = document.getElementById("musicBtn");
 
@@ -84,45 +84,42 @@ async function playWeddingMusic() {
 
   try {
     await music.play();
-
     if (musicBtn) {
       musicBtn.classList.add("playing");
       musicBtn.textContent = "♫";
-      musicBtn.title = "Pause music";
     }
   } catch (error) {
-    // Browser autoplay restriction: wait for visitor interaction.
-    console.log("Tap anywhere to start wedding music.");
+    console.log("Music playback blocked.");
   }
 }
 
 function pauseWeddingMusic() {
-  if (!music) return;
-
-  music.pause();
+  if (music && !music.paused) {
+    music.pause();
+  }
 
   if (musicBtn) {
     musicBtn.classList.remove("playing");
     musicBtn.textContent = "♫";
-    musicBtn.title = "Play music";
   }
 }
 
-// Attempt autoplay when the invitation page opens.
-window.addEventListener("load", () => {
-  playWeddingMusic();
+// Chrome tab hide ya background mein jaaye
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible") {
+    pauseWeddingMusic();
+  }
 });
 
-// If autoplay is blocked, the first tap starts the song.
-document.addEventListener("pointerdown", function startOnFirstTap() {
-  if (music && music.paused) {
-    playWeddingMusic();
-  }
-}, { once: true });
+// Website se navigate away karne par
+window.addEventListener("pagehide", pauseWeddingMusic);
 
-// Music button toggles playback.
+// Screen lock ya app background jaane par
+window.addEventListener("blur", pauseWeddingMusic);
+
+// Music button se play/pause
 if (musicBtn) {
-  musicBtn.addEventListener("click", async event => {
+  musicBtn.addEventListener("click", async (event) => {
     event.stopPropagation();
 
     if (music.paused) {
@@ -132,6 +129,7 @@ if (musicBtn) {
     }
   });
 }
+
 
 // WhatsApp invitation sharing
 async function shareInvitation() {
